@@ -78,6 +78,27 @@ target/
 # exclude data from source control by default
 /data/
 
+# Virtual Environments
+.venv/
+.gpu_venv
+.gpu_clean_venv/
+env/
+venv/
+
+# Cache directories
+.cache/
+/.cache/
+
+# Large Model Weights and Binaries (Prevent GitHub 100MB limit rejection)
+*.pth
+*.pt
+*.bin
+*.safetensors
+*.tar
+*.zip
+*.ckpt
+*.onnx
+
 # Mac OS-specific storage files
 .DS_Store
 

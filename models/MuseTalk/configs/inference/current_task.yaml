@@ -1,0 +1,4 @@
+task_0:
+  audio_path: /workspace/projects/DeepFake_Generation_Model/data/generated_audio/after_llm/sample_01.wav
+  bbox_shift: 4
+  video_path: /workspace/projects/DeepFake_Generation_Model/data/raw_videos/input_video.mp4
