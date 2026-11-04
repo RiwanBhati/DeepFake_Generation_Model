@@ -221,11 +221,9 @@ def main(args):
                     y2 = y2 + args.extra_margin
                     y2 = min(y2, frame.shape[0])
                 try:
-                    # High quality Lanczos-4 interpolation for crisp edge rendering
-                    res_frame = cv2.resize(res_frame.astype(np.uint8), (x2-x1, y2-y1), interpolation=cv2.INTER_LANCZOS4)
-                    # Unsharp masking to restore high-frequency mouth, teeth and lip sharpness
-                    blur_layer = cv2.GaussianBlur(res_frame, (0, 0), sigmaX=1.8)
-                    res_frame = cv2.addWeighted(res_frame, 1.35, blur_layer, -0.35, 0)
+                    # Antialiased pixel-accurate resizing based on scaling direction
+                    interp = cv2.INTER_AREA if (x2 - x1) < 256 else cv2.INTER_CUBIC
+                    res_frame = cv2.resize(res_frame.astype(np.uint8), (x2-x1, y2-y1), interpolation=interp)
                 except:
                     continue
                 

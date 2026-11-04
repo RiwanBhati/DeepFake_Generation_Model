@@ -60,7 +60,7 @@ def generate_tts_pair(
         text=raw_target_text,
         ref_audio=str(ref_audio_path),
         ref_text=ref_text,
-        speed=0.92,
+        speed=1.0,
         nfe_step=nfe_steps
     )
     sf.write(str(raw_wav_path), audio_raw, sr_raw)
@@ -74,7 +74,7 @@ def generate_tts_pair(
         text=refined_target_text,
         ref_audio=str(ref_audio_path),
         ref_text=ref_text,
-        speed=0.92,
+        speed=1.0,
         nfe_step=nfe_steps
     )
     sf.write(str(refined_wav_path), audio_refined, sr_refined)

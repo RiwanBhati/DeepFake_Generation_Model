@@ -53,7 +53,7 @@ def run_pipeline(
     target_text: str,
     sample_id: str = "sample_01",
     skip_video_sync: bool = False,
-    bbox_shift: int = 4
+    bbox_shift: int = 0
 ):
     print("="*65)
     print(f"🚀 STARTING DEEPFAKE HINGLISH PIPELINE: [{sample_id}]")
@@ -204,8 +204,8 @@ def main():
     parser.add_argument(
         "--bbox_shift",
         type=int,
-        default=4,
-        help="MuseTalk bounding box shift value (default: 4 for sharper mustache and active mouth sync)"
+        default=0,
+        help="MuseTalk bounding box shift value (default: 0 for calibrated canonical lip sync)"
     )
 
     args = parser.parse_args()

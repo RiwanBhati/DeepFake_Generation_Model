@@ -23,7 +23,7 @@ def run_musetalk_inference(
     video_path: str,
     audio_path: str,
     output_video_path: str,
-    bbox_shift: int = 4
+    bbox_shift: int = 0
 ) -> bool:
     """
     Executes MuseTalk lip-sync inference for a single video + audio pair.
@@ -103,7 +103,7 @@ def run_musetalk_pair(
     raw_audio_path: str,
     refined_audio_path: str,
     sample_id: str = "sample_01",
-    bbox_shift: int = 4
+    bbox_shift: int = 0
 ) -> dict:
     """
     Runs MuseTalk for both Before-LLM and After-LLM audio outputs.

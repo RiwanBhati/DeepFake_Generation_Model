@@ -164,7 +164,7 @@ class IndicF5Hinglish(torch.nn.Module):
         ref_audio: str,
         ref_text: str,
         nfe_step: int = 32,
-        speed: float = 0.92,
+        speed: float = 1.0,
         auto_align: bool = True
     ):
         """

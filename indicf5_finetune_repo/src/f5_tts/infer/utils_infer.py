@@ -434,10 +434,11 @@ def infer_batch_process(
     generated_waves = []
     spectrograms = []
 
-    if len(ref_text[-1].encode("utf-8")) == 1:
-        ref_text = ref_text + " "
+    # Ensure clean whitespace separator between reference and target so initial words like "I am" are distinct
+    ref_text = ref_text.strip() + " "
     # for i, gen_text in enumerate(progress.tqdm(gen_text_batches)):
     for i, gen_text in enumerate(gen_text_batches):
+        gen_text = gen_text.strip()
         # Prepare the text
         text_list = [ref_text + gen_text]
         final_text_list = convert_char_to_pinyin(text_list)
@@ -449,14 +450,14 @@ def infer_batch_process(
             # Calculate duration
             # In Hinglish code-switching, UTF-8 byte count skews duration because Devanagari is 3 bytes/char
             # while English is 1 byte/char. We calculate duration using unicode character count with
-            # a safety margin factor (1.18x) so flow matching does not cut off final words or swallow middle words.
+            # a tight 1.05x buffer to preserve the natural, energetic speaking tempo of the source video.
             ref_char_len = max(len(ref_text.strip()), 1)
             gen_char_len = max(len(gen_text.strip()), 1)
-            char_duration = ref_audio_len + int(ref_audio_len / ref_char_len * gen_char_len * 1.18 / speed)
+            char_duration = ref_audio_len + int(ref_audio_len / ref_char_len * gen_char_len * 1.05 / speed)
 
             ref_text_len = len(ref_text.encode("utf-8"))
             gen_text_len = len(gen_text.encode("utf-8"))
-            byte_duration = ref_audio_len + int(ref_audio_len / ref_text_len * gen_text_len * 1.18 / speed)
+            byte_duration = ref_audio_len + int(ref_audio_len / ref_text_len * gen_text_len * 1.05 / speed)
 
             duration = max(char_duration, byte_duration)
             print(f"[INFO DURATION] ref_char: {ref_char_len}, gen_char: {gen_char_len}, computed duration frames: {duration}")
