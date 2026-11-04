@@ -51,6 +51,7 @@ def run_pipeline(
     video_path: str,
     reference_text: str,
     target_text: str,
+    refined_text: str = None,
     sample_id: str = "sample_01",
     skip_video_sync: bool = False,
     bbox_shift: int = 0
@@ -85,9 +86,13 @@ def run_pipeline(
     # Step 2: LLM Text Refinement
     # -------------------------------------------------------------
     print("\n[STEP 2/4] Refining Hinglish Text with LLM...")
-    refinement = refine_target_text(target_text)
-    raw_text = refinement["raw_text"]
-    refined_text = refinement["refined_text"]
+    if refined_text:
+        raw_text = target_text
+        refined_text = refined_text
+    else:
+        refinement = refine_target_text(target_text)
+        raw_text = refinement["raw_text"]
+        refined_text = refinement["refined_text"]
 
     print("\n  • BEFORE LLM (Raw Input):")
     print(f"    \"{raw_text}\"")
@@ -191,6 +196,12 @@ def main():
         help="The new Hinglish sentence you want to synthesize"
     )
     parser.add_argument(
+        "--refined_text",
+        type=str,
+        default=None,
+        help="Optional explicit refined text (English + Devanagari) if target_text is raw Roman Hinglish"
+    )
+    parser.add_argument(
         "--sample_id",
         type=str,
         default="sample_01",
@@ -214,6 +225,7 @@ def main():
         video_path=args.video,
         reference_text=args.ref_text,
         target_text=args.target_text,
+        refined_text=args.refined_text,
         sample_id=args.sample_id,
         skip_video_sync=args.skip_video,
         bbox_shift=args.bbox_shift

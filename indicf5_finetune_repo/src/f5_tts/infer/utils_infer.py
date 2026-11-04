@@ -453,13 +453,7 @@ def infer_batch_process(
             # a tight 1.05x buffer to preserve the natural, energetic speaking tempo of the source video.
             ref_char_len = max(len(ref_text.strip()), 1)
             gen_char_len = max(len(gen_text.strip()), 1)
-            char_duration = ref_audio_len + int(ref_audio_len / ref_char_len * gen_char_len * 1.05 / speed)
-
-            ref_text_len = len(ref_text.encode("utf-8"))
-            gen_text_len = len(gen_text.encode("utf-8"))
-            byte_duration = ref_audio_len + int(ref_audio_len / ref_text_len * gen_text_len * 1.05 / speed)
-
-            duration = max(char_duration, byte_duration)
+            duration = ref_audio_len + int(ref_audio_len / ref_char_len * gen_char_len * 1.05 / speed)
             print(f"[INFO DURATION] ref_char: {ref_char_len}, gen_char: {gen_char_len}, computed duration frames: {duration}")
         # inference
         with torch.inference_mode():
