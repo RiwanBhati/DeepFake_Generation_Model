@@ -75,8 +75,10 @@ target/
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
-# exclude data from source control by default
-/data/
+# Data directory (Sample test videos, audio, and metadata are tracked)
+# Exclude raw videos larger than 100MB if added in future
+data/**/*.tmp
+data/**/*.log
 
 # Virtual Environments
 .venv/
@@ -98,6 +100,8 @@ venv/
 *.zip
 *.ckpt
 *.onnx
+models/MuseTalk/models/
+models/MuseTalk/ffmpeg-4.4-amd64-static/
 
 # Mac OS-specific storage files
 .DS_Store
